@@ -1,5 +1,4 @@
 
--- zomato.sql
 
 -- DROP DATABASE IF EXISTS zomato;
 CREATE DATABASE IF NOT EXISTS zomato;
@@ -10,7 +9,8 @@ USE zomato;
 -- ---------------------------------------------------------
 CREATE TABLE Customer (
     customer_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    fname VARCHAR(100) NOT NULL,
+    lname VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     phone VARCHAR(15),
     password VARCHAR(255) NOT NULL
@@ -42,7 +42,8 @@ CREATE TABLE Menu (
 -- ---------------------------------------------------------
 CREATE TABLE DeliveryPartner (
     partner_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    fdname VARCHAR(100) NOT NULL,
+    ldname VARCHAR(100) NOT NULL,
     phone VARCHAR(15)
 );
 
@@ -67,12 +68,12 @@ CREATE TABLE Orders (
 -- ---------------------------------------------------------
 
 -- Customers
-INSERT INTO Customer (name, email, phone, password) VALUES
-('Ankit Sharma', 'ankit.sharma@gmail.com', '9876543210', 'password@123'),
-('Priya Verma', 'priya.verma@gmail.com', '9876501122', 'securepass'),
-('Rahul Mehra', 'rahul.mehra@gmail.com', '9876512345', 'rahulpass'),
-('Sneha Kapoor', 'sneha.kapoor@gmail.com', '9876523456', 'snehasecure'),
-('Vikas Jain', 'vikas.jain@gmail.com', '9876534567', 'vikaspass');
+INSERT INTO Customer (fname,lname, email, phone, password) VALUES
+('Ankit','Sharma', 'ankit.sharma@gmail.com', '9876543210', 'password@123'),
+('Priya',' Verma', 'priya.verma@gmail.com', '9876501122', 'securepass'),
+('Rahul' ,' Mehra', 'rahul.mehra@gmail.com', '9876512345', 'rahulpass'),
+('Sneha',' Kapoor', 'sneha.kapoor@gmail.com', '9876523456', 'snehasecure'),
+('Vikas',' Jain', 'vikas.jain@gmail.com', '9876534567', 'vikaspass');
 
 -- Restaurants
 INSERT INTO Restaurant (name, address, phone) VALUES
@@ -96,12 +97,12 @@ INSERT INTO Menu (restaurant_id, item_name, price) VALUES
 (5, 'Vada Pav', 60.00);
 
 -- Delivery Partners
-INSERT INTO DeliveryPartner (name, phone) VALUES
-('Rohit Kumar', '9998800001'),
-('Manoj Singh', '9998800002'),
-('Deepak Joshi', '9998800003'),
-('Arjun Rathore', '9998800004'),
-('Suresh Yadav', '9998800005');
+INSERT INTO DeliveryPartner (fdname,ldname, phone) VALUES
+('Rohit',' Kumar', '9998800001'),
+('Manoj',' Singh', '9998800002'),
+('Deepak ','Joshi', '9998800003'),
+('Arjun' ,'Rathore', '9998800004'),
+('Suresh' ,'Yadav', '9998800005');
 
 -- Orders
 INSERT INTO Orders (customer_id, restaurant_id, partner_id, total_amount, order_status) VALUES
@@ -119,14 +120,14 @@ INSERT INTO Orders (customer_id, restaurant_id, partner_id, total_amount, order_
 UPDATE Orders SET order_status = 'Delivered' WHERE order_id = 5;
 
 -- Delete a customer who canceled account
-DELETE FROM Customer WHERE customer_id = 5;
+-- DELETE FROM Customer WHERE customer_id = 5;
 
 -- Change price of Masala Dosa
 UPDATE Menu SET price = 140.00 WHERE item_name = 'Masala Dosa';
 
 -- Insert a new customer
-INSERT INTO Customer (name, email, phone, password) VALUES
-('Ritu Saxena', 'ritu.saxena@gmail.com', '9876547777', 'ritu@pass');
+INSERT INTO Customer (fname,lname, email, phone, password) VALUES
+('Ritu' ,'Saxena', 'ritu.saxena@gmail.com', '9876547777', 'ritu@pass');
 
 -- Place new order
 INSERT INTO Orders (customer_id, restaurant_id, partner_id, total_amount, order_status) VALUES
@@ -137,7 +138,7 @@ INSERT INTO Orders (customer_id, restaurant_id, partner_id, total_amount, order_
 -- ---------------------------------------------------------
 
 -- list orders with customer names
-SELECT o.order_id, c.name AS customer, r.name AS restaurant, o.total_amount, o.order_status
+SELECT o.order_id, c.fname AS customer, r.name AS restaurant, o.total_amount, o.order_status
 FROM Orders o
 JOIN Customer c ON o.customer_id = c.customer_id
 JOIN Restaurant r ON o.restaurant_id = r.restaurant_id;
@@ -151,3 +152,5 @@ WHERE r.name = 'Punjabi Tadka';
 -- ---------------------------------------------------------
 -- Done
 -- ---------------------------------------------------------
+
+
